@@ -1,15 +1,16 @@
-const API_BASE_URL = 'http://127.0.0.1'
+const API_BASE_URL = '127.0.0.1'
 
 function getApiUrl (path) {
   const {hash} = window.location
+  const api_url = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : API_BASE_URL
   // hash is a string with the leading :, so match it here.
-  const port = hash ? hash.substr(1) : ':3453'
-  const url = `${API_BASE_URL}${port}${path}`
+  const port = process.env.REACT_APP_API_PORT ? `:${process.env.REACT_APP_API_PORT}` : (hash ? hash.substr(1) : ':3453')
+  const url = `http://${api_url}${port}${path}`
   return url
 }
 
 async function getJson (path) {
-  const r = await window.fetch(getApiUrl(path), { 'method': 'GET' })
+  const r = await window.fetch(getApiUrl(path), { 'method': 'GET', 'mode': 'cors', 'credentials': "same-origin" })
   if (!r.ok) { throw Error(`Received error response: ${r.status}: ${r.statusText}`) }
   const json = await r.json()
   // console.log(path, JSON.stringify(json, null, 2))
@@ -18,7 +19,7 @@ async function getJson (path) {
 
 // Newline-delimited JSON
 async function getNdJson (path) {
-  const r = await window.fetch(getApiUrl(path), { 'method': 'GET' })
+  const r = await window.fetch(getApiUrl(path), { 'method': 'GET', 'mode': 'cors', 'credentials': "same-origin" })
   if (!r.ok) { throw Error(`Received error response: ${r.status}: ${r.statusText}`) }
   return r.text().then((str) => {
     const arr = toNdJson(str)
