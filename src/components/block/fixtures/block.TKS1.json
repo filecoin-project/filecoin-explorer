@@ -1,0 +1,18 @@
+{
+  "cid": "zDPWYqFD7np5ATk5Qn2bT4nv943Ki9Qug2pm2drtnoyXzYQETKS1",
+  "miner": "",
+  "ticket": null,
+  "parents": [
+    {
+      "/": "zDPWYqFD4uRLT1cJ62HYKp6nembi2NGPyZ4fJ6E3WMS18YjDkQRf"
+    }
+  ],
+  "parentWeight": 0,
+  "height": 627,
+  "nonce": 498,
+  "messages": [],
+  "stateRoot": {
+    "/": "zdpuAm8mTU17dB5mckEDSNXFtvuxVESUhKivSLCWw1kMZjdK9"
+  },
+  "messageReceipts": []
+}

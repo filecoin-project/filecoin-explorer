@@ -1,0 +1,18 @@
+{
+  "miner": "",
+  "ticket": null,
+  "parents": [
+    {
+      "/": "zDPWYqFD7n8g4dJX1WJqPy7X9aPpAidhXyJUbHruSiuiMtpDehkW"
+    }
+  ],
+  "parentWeightNumerator": "Mg==",
+  "parentWeightDenominator": "AQ==",
+  "height": "CA==",
+  "nonce": "BQ=",
+  "messages": [],
+  "stateRoot": {
+    "/": "zdpuAm8mTU17dB5mckEDSNXFtvuxVESUhKivSLCWw1kMZjdK9"
+  },
+  "messageReceipts": []
+}

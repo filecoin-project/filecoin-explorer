@@ -1,0 +1,70 @@
+@import "../node_modules/tachyons";
+@import "../node_modules/ipfs-css";
+
+:focus .focus-outline,
+.focus-outline:focus {
+  outline: 0;
+  box-shadow: 0 0 0 1px rgba(201, 210, 215, .4);
+}
+
+dl {
+  display: inline;
+}
+
+dd {
+  display: inline;
+  margin: 0;
+}
+
+dd:after {
+  display: block;
+  content: '';
+}
+
+dt {
+  display: inline-block;
+  min-width: 80px;
+  font-weight: 700;
+}
+
+div .inner {
+  position: relative;
+  left: 10px;
+}
+
+table .inner {
+  position: relative;
+  left: 25px;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.3);
+}
+
+.modal div {
+    width: 400px;
+    margin: 20% auto;
+    background: white;
+    padding: 1em 2em;
+    position: relative;
+}
+
+.modal button.close {
+  font-size: .8em;
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 0em;
+  right: .5em;
+  cursor: pointer;
+  padding: .5em;
+}
+
+.modal button.close::after {
+  content: '⨉'
+}

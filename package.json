@@ -1,0 +1,43 @@
+{
+  "name": "filecoin-explorer",
+  "version": "0.1.0",
+  "description": "An open source Filecoin block explorer written in JavaScript.",
+  "repository": "https://github.com/filecoin-project/filecoin-explorer.git",
+  "private": true,
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "dependencies": {
+    "ipfs-css": "^0.5.0",
+    "query-string": "^5.1.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-flip-move": "^3.0.2",
+    "react-loader": "^2.4.5",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "react-transition-group": "^2.3.1",
+    "tachyons": "^4.10.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "lint": "standard src",
+    "lint-fix": "standard src --fix",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^3.4.7",
+    "@storybook/addon-actions": "^3.4.7",
+    "@storybook/addon-links": "^3.4.7",
+    "@storybook/addons": "^3.4.7",
+    "@storybook/react": "^3.4.7",
+    "babel-eslint": "^8.2.3",
+    "standard": "^11.0.1"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  }
+}

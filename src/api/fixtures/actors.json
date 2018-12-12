@@ -1,0 +1,177 @@
+[
+  {
+    "actorType": "StoragemarketActor",
+    "address": "fcqafmqgvzkzpvc6wjxecm7gsweuawjv8t6falk6r",
+    "code": {
+      "/": "zDPWYqFD1HWRRAyaocUS3dU62xkZwPh1vZdUtNA1kRp64aggAgKe"
+    },
+    "nonce": 0,
+    "balance": null,
+    "exports": {
+      "addAsk": {
+        "Params": [
+          "*types.TokenAmount",
+          "*types.BytesAmount"
+        ],
+        "Return": [
+          "*big.Int"
+        ]
+      },
+      "addBid": {
+        "Params": [
+          "*types.TokenAmount",
+          "*types.BytesAmount"
+        ],
+        "Return": [
+          "*big.Int"
+        ]
+      },
+      "addDeal": {
+        "Params": [
+          "*big.Int",
+          "*big.Int",
+          "[]byte",
+          "[]byte"
+        ],
+        "Return": [
+          "*big.Int"
+        ]
+      },
+      "commitDeals": {
+        "Params": [
+          "[]uint64"
+        ],
+        "Return": [
+          "*big.Int"
+        ]
+      },
+      "createMiner": {
+        "Params": [
+          "*types.BytesAmount",
+          "[]byte"
+        ],
+        "Return": [
+          "types.Address"
+        ]
+      }
+    },
+    "memory": {
+      "Miners": {},
+      "Orderbook": {
+        "Asks": {},
+        "NextAskID": 0,
+        "Bids": {},
+        "NextBidID": 0
+      },
+      "Filemap": {
+        "Files": {},
+        "Deals": null
+      },
+      "TotalCommittedStorage": null
+    }
+  },
+  {
+    "actorType": "AccountActor",
+    "address": "fcqcrgxvpww7cfvpcshccmychg9d3yqvd8r2nkck7",
+    "code": {
+      "/": "zDPWYqFD2HCJ9ZxTTFYmMBudQJbF3K7vb6rY6fu7G178vcESvA8V"
+    },
+    "nonce": 0,
+    "balance": "60000",
+    "exports": {},
+    "memory": {}
+  },
+  {
+    "actorType": "AccountActor",
+    "address": "fcqguttqgahl6ztde7umgcrc0t4fvdgluhus0sz4w",
+    "code": {
+      "/": "zDPWYqFD2HCJ9ZxTTFYmMBudQJbF3K7vb6rY6fu7G178vcESvA8V"
+    },
+    "nonce": 0,
+    "balance": "50000",
+    "exports": {},
+    "memory": {}
+  },
+  {
+    "actorType": "PaymentbrokerActor",
+    "address": "fcqp606qfk5gwmq6ac24g4mhv3cr8zzf67vqkpulh",
+    "code": {
+      "/": "zDPWYqFD6SxGKjuHuay6XCBNDciffD75hySBpGV9ogySS249zN9n"
+    },
+    "nonce": 0,
+    "balance": "0",
+    "exports": {
+      "close": {
+        "Params": [
+          "types.Address",
+          "*types.ChannelID",
+          "*types.TokenAmount",
+          "[]byte"
+        ],
+        "Return": []
+      },
+      "createChannel": {
+        "Params": [
+          "types.Address",
+          "*types.BlockHeight"
+        ],
+        "Return": [
+          "*types.ChannelID"
+        ]
+      },
+      "extend": {
+        "Params": [
+          "*types.ChannelID",
+          "*types.BlockHeight"
+        ],
+        "Return": []
+      },
+      "ls": {
+        "Params": [
+          "types.Address"
+        ],
+        "Return": [
+          "[]byte"
+        ]
+      },
+      "reclaim": {
+        "Params": [
+          "*types.ChannelID"
+        ],
+        "Return": []
+      },
+      "update": {
+        "Params": [
+          "types.Address",
+          "*types.ChannelID",
+          "*types.TokenAmount",
+          "[]byte"
+        ],
+        "Return": []
+      },
+      "voucher": {
+        "Params": [
+          "*types.ChannelID",
+          "*types.TokenAmount"
+        ],
+        "Return": [
+          "[]byte"
+        ]
+      }
+    },
+    "memory": {
+      "Channels": {}
+    }
+  },
+  {
+    "actorType": "AccountActor",
+    "address": "fcqyrerzkmgpfmhjnuwaj88elewwjda6jzqwqghvh",
+    "code": {
+      "/": "zDPWYqFD2HCJ9ZxTTFYmMBudQJbF3K7vb6rY6fu7G178vcESvA8V"
+    },
+    "nonce": 0,
+    "balance": "10000000",
+    "exports": {},
+    "memory": {}
+  }
+]

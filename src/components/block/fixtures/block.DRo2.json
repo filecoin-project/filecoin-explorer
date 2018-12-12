@@ -1,0 +1,18 @@
+{
+  "cid": "zDPWYqFD7pu9A7r1Lb45GKKkaai4NquaRViBMyPfLZHKrW87DRo2",
+  "miner": "fcqxwu29m46y05l5xpa5yz776529edzrhunfh586",
+  "ticket": "Kh8TZkOXm7K4og0wmMIRVJiR/7WmPg5R9Z4/4Vofu28=",
+  "parents": [
+    {
+      "/": "zDPWYqFD7np5ATk5Qn2bT4nv943Ki9Qug2pm2drtnoyXzYQETKS1"
+    }
+  ],
+  "parentWeight": 0,
+  "height": 628,
+  "nonce": 499,
+  "messages": [],
+  "stateRoot": {
+    "/": "zdpuAm8mTU17dB5mckEDSNXFtvuxVESUhKivSLCWw1kMZjdK9"
+  },
+  "messageReceipts": []
+}
