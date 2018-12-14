@@ -1,11 +1,8 @@
-const API_BASE_URL = '127.0.0.1'
-
 function getApiUrl (path) {
-  const {hash} = window.location
-  const api_url = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : API_BASE_URL
-  // hash is a string with the leading :, so match it here.
-  const port = process.env.REACT_APP_API_PORT ? `:${process.env.REACT_APP_API_PORT}` : (hash ? hash.substr(1) : ':3453')
-  const url = `http://${api_url}${port}${path}`
+  // Setting the API_URL to '/' results in a 'http://api' call because all paths start with '/'.
+  // If our API_URL is '/' we want to be making requests at our root, so we drop the extra
+  const api_url = process.env.REACT_APP_API_URL == '/' ? '' : process.env.REACT_APP_API_URL
+  const url = `${api_url}${path}`
   return url
 }
 

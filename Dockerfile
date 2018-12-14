@@ -1,4 +1,8 @@
-FROM node:8
+FROM node:11
+
+# Default local filecoin
+ARG REACT_APP_API_URL="http://127.0.0.1:3453"
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -13,5 +17,11 @@ RUN yarn install
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
-CMD [ "yarn", "start" ]
+RUN yarn build
+
+FROM nginx:1.15
+MAINTAINER Filecoin Dev Team
+
+COPY --from=0 /usr/src/app/build /usr/share/nginx/html
+
+EXPOSE 80

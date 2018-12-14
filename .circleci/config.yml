@@ -46,7 +46,7 @@ jobs:
           name: build & push image
           command: |
             export SHORT_GIT_SHA=$(echo $CIRCLE_SHA1 | cut -c -6)
-            docker build -t 657871693752.dkr.ecr.us-east-1.amazonaws.com/blockexplorer:$SHORT_GIT_SHA .
+            docker build --build-arg REACT_APP_API_URL="/" -t 657871693752.dkr.ecr.us-east-1.amazonaws.com/blockexplorer:$SHORT_GIT_SHA .
             docker tag 657871693752.dkr.ecr.us-east-1.amazonaws.com/blockexplorer:$SHORT_GIT_SHA 657871693752.dkr.ecr.us-east-1.amazonaws.com/blockexplorer:latest
             docker push 657871693752.dkr.ecr.us-east-1.amazonaws.com/blockexplorer:$SHORT_GIT_SHA
             docker push 657871693752.dkr.ecr.us-east-1.amazonaws.com/blockexplorer:latest
