@@ -8,8 +8,7 @@
   ],
   "height": "Ag==",
   "nonce": "Ag==",
-  "parentWeightNumerator": "Mg==",
-  "parentWeightDenominator": "AQ==",
+  "parentWeight": "Mg==",
   "messages": [],
   "stateRoot": {
     "/": "zdpuAm8mTU17dB5mckEDSNXFtvuxVESUhKivSLCWw1kMZjdK9"

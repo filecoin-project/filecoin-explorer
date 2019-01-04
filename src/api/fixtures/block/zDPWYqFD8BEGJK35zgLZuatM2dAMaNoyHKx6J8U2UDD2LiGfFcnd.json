@@ -6,8 +6,7 @@
       "/": "zDPWYqFD7n8g4dJX1WJqPy7X9aPpAidhXyJUbHruSiuiMtpDehkW"
     }
   ],
-  "parentWeightNumerator": "Mg==",
-  "parentWeightDenominator": "AQ==",
+  "parentWeight": "Mg==",
   "height": "CA==",
   "nonce": "BQ=",
   "messages": [],

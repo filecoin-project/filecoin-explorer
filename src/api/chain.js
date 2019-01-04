@@ -101,9 +101,10 @@ class Chain {
     if (response) {
       block.height = decodeBigInt(response.height)
       block.nonce = decodeBigInt(response.nonce)
-      block.parentWeightNumerator = decodeBigInt(response.parentWeightNumerator)
-      block.parentWeightDenominator = decodeBigInt(response.parentWeightDenominator)
-      block.messages.forEach((m) => m.message.nonce = decodeBigInt(m.message.nonce))
+      block.parentWeight = decodeBigInt(response.parentWeight)
+      if (block.messages) {
+        block.messages.forEach((m) => m.message.nonce = decodeBigInt(m.message.nonce))
+      }
     }
     this.blockByCid[cid] = block
     this.addBlockToChain(block)
