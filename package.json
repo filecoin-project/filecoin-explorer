@@ -26,7 +26,8 @@
     "lint": "standard src",
     "lint-fix": "standard src --fix",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "serve": "serve -s build"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^3.4.7",
@@ -35,6 +36,7 @@
     "@storybook/addons": "^3.4.7",
     "@storybook/react": "^3.4.7",
     "babel-eslint": "^8.2.3",
+    "serve": "^10.1.1",
     "standard": "^11.0.1"
   },
   "standard": {

@@ -30,8 +30,7 @@ test('fetchBlock', async () => {
     ...headBlock,
     height: decodeBigInt(headBlock.height),
     nonce: decodeBigInt(headBlock.nonce),
-    parentWeightNumerator: decodeBigInt(headBlock.parentWeightNumerator),
-    parentWeightDenominator: decodeBigInt(headBlock.parentWeightDenominator),
+    parentWeight: decodeBigInt(headBlock.parentWeight),
   })
 
   // expect 2nd call to hit internal cache not the api mock
@@ -41,8 +40,7 @@ test('fetchBlock', async () => {
     ...headBlock,
     height: decodeBigInt(headBlock.height),
     nonce: decodeBigInt(headBlock.nonce),
-    parentWeightNumerator: decodeBigInt(headBlock.parentWeightNumerator),
-    parentWeightDenominator: decodeBigInt(headBlock.parentWeightDenominator),
+    parentWeight: decodeBigInt(headBlock.parentWeight),
   })
 })
 
@@ -59,8 +57,7 @@ test('fetchHeadBlock', async () => {
     ...headBlock,
     height: decodeBigInt(headBlock.height),
     nonce: decodeBigInt(headBlock.nonce),
-    parentWeightNumerator: decodeBigInt(headBlock.parentWeightNumerator),
-    parentWeightDenominator: decodeBigInt(headBlock.parentWeightDenominator),
+    parentWeight: decodeBigInt(headBlock.parentWeight),
   })
 })
 
