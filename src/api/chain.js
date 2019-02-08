@@ -1,5 +1,5 @@
 import api from './api'
-import { decodeBigInt } from './util'
+import { mapAllBigInts } from './util'
 
 /*
   Chain - a caching view on the blocks we've seen so far.
@@ -93,20 +93,14 @@ class Chain {
     this.blockByCid[cid] = promise
 
     const response = await promise
+
     const block = {
       cid: cid,
-      ...response
+      ...mapAllBigInts(response)
     }
 
-    if (response) {
-      block.height = decodeBigInt(response.height)
-      block.nonce = decodeBigInt(response.nonce)
-      block.parentWeight = decodeBigInt(response.parentWeight)
-      if (block.messages) {
-        block.messages.forEach((m) => m.message.nonce = decodeBigInt(m.message.nonce))
-      }
-    }
     this.blockByCid[cid] = block
+
     this.addBlockToChain(block)
 
     return Object.assign({}, block)
