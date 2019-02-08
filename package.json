@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "ipfs-css": "^0.5.0",
+    "map-obj": "^3.0.0",
     "query-string": "^5.1.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
