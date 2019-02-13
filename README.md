@@ -1,5 +1,3 @@
-**Note: THE FILECOIN PROJECT IS STILL EXTREMELY CONFIDENTIAL. Do not share or discuss the project outside of designated preview channels (chat channels, Discourse forum, GitHub, emails to Filecoin team), not even with partners/spouses/family members. If you have any questions, please email [legal@protocol.ai](mailto:legal@protocol.ai).**
-
 # Filecoin Explorer (filecoin-explorer)
 
 [![CircleCI](https://circleci.com/gh/filecoin-project/filecoin-explorer.svg?style=svg&circle-token=3b2c3a7a34d3e6927d9f49d518e9228478c72911)](https://circleci.com/gh/filecoin-project/filecoin-explorer)
