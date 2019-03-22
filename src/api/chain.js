@@ -96,7 +96,7 @@ class Chain {
 
     const block = {
       cid: cid,
-      ...mapAllBigInts(response)
+      ...response
     }
 
     this.blockByCid[cid] = block
@@ -112,8 +112,7 @@ class Chain {
   async fetchHeadBlock () {
     const raw = await api.getJson(`/api/chain/head`)
     // TODO: Proper support for tipsets
-    const cid = raw && raw.length > 0 && raw[0]['/']
-    return this.fetchBlock(cid)
+    return raw && raw.length > 0 && raw[0]
   }
 
   /**
