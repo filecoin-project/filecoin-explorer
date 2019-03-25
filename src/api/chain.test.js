@@ -1,7 +1,6 @@
 /* global jest, test, expect */
 
 import api from './api'
-import { decodeBigInt } from './util'
 import Chain from './chain'
 import chainHeadRes from './fixtures/chain.head.json'
 import headBlock from './fixtures/block/zDPWYqFD7pu9A7r1Lb45GKKkaai4NquaRViBMyPfLZHKrW87DRo2.json'
@@ -28,9 +27,9 @@ test('fetchBlock', async () => {
   expect(block).toEqual({
     cid: chainHeadRes[0]['/'],
     ...headBlock,
-    height: decodeBigInt(headBlock.height),
-    nonce: decodeBigInt(headBlock.nonce),
-    parentWeight: decodeBigInt(headBlock.parentWeight),
+    height: Number(headBlock.height),
+    nonce: Number(headBlock.nonce),
+    parentWeight: Number(headBlock.parentWeight),
   })
 
   // expect 2nd call to hit internal cache not the api mock
@@ -38,9 +37,9 @@ test('fetchBlock', async () => {
   expect(block).toEqual({
     cid: chainHeadRes[0]['/'],
     ...headBlock,
-    height: decodeBigInt(headBlock.height),
-    nonce: decodeBigInt(headBlock.nonce),
-    parentWeight: decodeBigInt(headBlock.parentWeight),
+    height: Number(headBlock.height),
+    nonce: Number(headBlock.nonce),
+    parentWeight: Number(headBlock.parentWeight),
   })
 })
 
@@ -55,9 +54,9 @@ test('fetchHeadBlock', async () => {
   expect(block).toEqual({
     cid: chainHeadRes[0]['/'],
     ...headBlock,
-    height: decodeBigInt(headBlock.height),
-    nonce: decodeBigInt(headBlock.nonce),
-    parentWeight: decodeBigInt(headBlock.parentWeight),
+    height: Number(headBlock.height),
+    nonce: Number(headBlock.nonce),
+    parentWeight: Number(headBlock.parentWeight),
   })
 })
 
@@ -76,7 +75,7 @@ test('fetchChain', async () => {
 
   expect(res.length).toBe(pageSize)
   expect(res[0][0].cid).toEqual(chainHeadRes[0]['/'])
-  const height = decodeBigInt(headBlock.height)
+  const height = Number(headBlock.height)
   expect(res[0][0].height).toEqual(height)
   // expect 2 null blocks
   expect(res[1][0]).toEqual({height: height - 1})
