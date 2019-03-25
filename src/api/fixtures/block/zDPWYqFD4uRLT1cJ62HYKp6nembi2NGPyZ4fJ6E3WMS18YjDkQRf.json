@@ -6,9 +6,9 @@
       "/": "zDPWYqFCtf5awkxnZbpurnQFvsrafnv4nJbP8UkAHD8GCf8T2Sz4"
     }
   ],
-  "height": "AQ==",
-  "nonce": "AQ==",
-  "parentWeight": "Mg==",
+  "height": "1",
+  "nonce": "1",
+  "parentWeight": "50",
   "messages": [],
   "stateRoot": {
     "/": "zdpuAm8mTU17dB5mckEDSNXFtvuxVESUhKivSLCWw1kMZjdK9"

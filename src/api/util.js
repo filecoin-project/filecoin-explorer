@@ -6,7 +6,7 @@ export function mapAllBigInts (obj, keys = KeysForBigInts) {
   if (!obj) return obj
   return mapObj(obj, (key, value) => {
     if (keys.includes(key)) {
-      value = decodeBigInt(value)
+      value = Number(value)
     }
     return [key, value]
   }, { deep: true })
