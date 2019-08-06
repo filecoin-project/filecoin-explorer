@@ -1,5 +1,6 @@
 import api from './api'
 import { mapAllBigInts } from './util'
+var Promise = require('promise');
 
 /*
   Chain - a caching view on the blocks we've seen so far.
@@ -87,23 +88,36 @@ class Chain {
     const found = this.blockByCid[cid]
     if (found) return found
 
-    const promise = api.getJson(`/api/show/block/${cid}`)
+    const headerPromise = api.getJson(`/api/show/block/${cid}`)
+      
+    const fullBlockPromise = headerPromise.then(header => {
+      var fullBlock = {
+	cid: cid,
+	...mapAllBigInts(header)
+      }
+	  
+      const msgsCid = header.Messages
+      const rcptsCid = header.MessageReceipts
+      const messagesPromise = api.getJson(`/api/dag/get/${msgsCid}`)
+      const receiptsPromise = api.getJson(`/api/dag/get/${rcptsCid}`)
+      return Promise.all([messagesPromise, receiptsPromise]).then(values => {
+	fullBlock.Messages = values[0]
+	fullBlock.MessageReceipts = values[1]
+	return fullBlock
+      })
+    });
+      
     // Handle if another req for the same cid comes in while we're waiting for this one.
     // fetchBlock is an async funtion, so it always returns a promise.
-    this.blockByCid[cid] = promise
+    this.blockByCid[cid] = fullBlockPromise
 
-    const response = await promise
+    const fullBlock = await fullBlockPromise
 
-    const block = {
-      cid: cid,
-      ...mapAllBigInts(response)
-    }
+    this.blockByCid[cid] = fullBlock
 
-    this.blockByCid[cid] = block
+    this.addBlockToChain(fullBlock)
 
-    this.addBlockToChain(block)
-
-    return Object.assign({}, block)
+    return Object.assign({}, fullBlock)
   }
 
   /**
