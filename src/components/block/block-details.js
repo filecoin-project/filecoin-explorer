@@ -89,7 +89,7 @@ class BlockDetails extends Component {
             <section className='pv3'>
               <h2 className='f5 fw3 ttu tracked teal'>
                 Messages <Badge>{block.messages ? block.messages.length : 0}</Badge>
-              </h2>
+		</h2>
               <MessagesTable data={block.messages || []} />
             </section>
             {block.messages && block.messages.length ? (

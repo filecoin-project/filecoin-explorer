@@ -87,7 +87,6 @@ class Chain {
     // found is either the block or a promise of the block.
     const found = this.blockByCid[cid]
     if (found) return found
-
     const headerPromise = api.getJson(`/api/show/block/${cid}`)
       
     const fullBlockPromise = headerPromise.then(header => {
@@ -96,14 +95,13 @@ class Chain {
 	...mapAllBigInts(header)
       }
 	  
-      const msgsCid = header.Messages
-      const rcptsCid = header.MessageReceipts
+      const msgsCid = header.messages["/"]
+      const rcptsCid = header.messageReceipts["/"]
       const messagesPromise = api.getJson(`/api/dag/get/${msgsCid}`)
       const receiptsPromise = api.getJson(`/api/dag/get/${rcptsCid}`)
-      return Promise.all([messagesPromise, receiptsPromise]).then(values => {
+	return Promise.all([messagesPromise, receiptsPromise]).then(values => {
 	fullBlock.messages = values[0]
         fullBlock.messageReceipts = values[1]
-	console.log(fullBlock)
 	return fullBlock
       })
     });
