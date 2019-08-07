@@ -72,6 +72,7 @@ test('fetchChain', async () => {
 
   const pageSize = 6
   const res = await chainApi.fetchChain(pageSize)
+  console.log(res)   
 
   expect(res.length).toBe(pageSize)
   expect(res[0][0].cid).toEqual(chainHeadRes[0]['/'])

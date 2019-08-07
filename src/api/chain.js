@@ -101,8 +101,9 @@ class Chain {
       const messagesPromise = api.getJson(`/api/dag/get/${msgsCid}`)
       const receiptsPromise = api.getJson(`/api/dag/get/${rcptsCid}`)
       return Promise.all([messagesPromise, receiptsPromise]).then(values => {
-	fullBlock.Messages = values[0]
-	fullBlock.MessageReceipts = values[1]
+	fullBlock.messages = values[0]
+        fullBlock.messageReceipts = values[1]
+	console.log(fullBlock)
 	return fullBlock
       })
     });
