@@ -18,7 +18,8 @@ const Stat = ({label, bg, children}) => (
 )
 
 export const Block = ({block, secondary, truncate, onClick}) => {
-  const { height, cid, miner, ticket, stateRoot, messages, parentWeightNumerator, parentWeightDenominator = [], messageReceipts = [] } = block
+  const { cid, header, messages, messageReceipts = [] } = block
+  const { height, miner, ticket, stateRoot, parentWeightNumerator, parentWeightDenominator = [] } = header
   const isNullBlock = !cid
   const parentWeight = (parentWeightNumerator / parentWeightDenominator) || 0
   const parentWeightStr = parentWeight > 10000 ? parentWeight.toExponential(1) : parentWeight.toLocaleString(2)

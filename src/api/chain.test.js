@@ -24,23 +24,19 @@ test('fetchBlock', async () => {
 
   const cid = chainHeadRes[0]['/']
   let block = await chainApi.fetchBlock(cid)
-  expect(block).toEqual({
+  var expected = {
     cid: chainHeadRes[0]['/'],
-    ...headBlock,
-    height: Number(headBlock.height),
-    nonce: Number(headBlock.nonce),
-    parentWeight: Number(headBlock.parentWeight),
-  })
+    header: headBlock.header
+  }
+  expected.header.height = Number(expected.header.height)
+  expected.header.nonce = Number(expected.header.nonce)
+  expected.header.parentWeight = Number(expected.header.parentWeight)
+    
+  expect(block).toEqual(expected)
 
   // expect 2nd call to hit internal cache not the api mock
   block = await chainApi.fetchBlock(cid)
-  expect(block).toEqual({
-    cid: chainHeadRes[0]['/'],
-    ...headBlock,
-    height: Number(headBlock.height),
-    nonce: Number(headBlock.nonce),
-    parentWeight: Number(headBlock.parentWeight),
-  })
+  expect(block).toEqual(expected)
 })
 
 test('fetchHeadBlock', async () => {
@@ -51,13 +47,15 @@ test('fetchHeadBlock', async () => {
     .mockReturnValueOnce(resolve(headBlock))
 
   const block = await chainApi.fetchHeadBlock()
-  expect(block).toEqual({
-    cid: chainHeadRes[0]['/'],
-    ...headBlock,
-    height: Number(headBlock.height),
-    nonce: Number(headBlock.nonce),
-    parentWeight: Number(headBlock.parentWeight),
-  })
+  var expected = {
+      cid: chainHeadRes[0]['/'],
+      header: headBlock.header
+  }
+  expected.header.height = Number(expected.header.height)
+  expected.header.nonce = Number(expected.header.nonce)
+  expected.header.parentWeight = Number(expected.header.parentWeight)    
+    
+  expect(block).toEqual(expected)
 })
 
 test('fetchChain', async () => {
@@ -75,15 +73,15 @@ test('fetchChain', async () => {
 
   expect(res.length).toBe(pageSize)
   expect(res[0][0].cid).toEqual(chainHeadRes[0]['/'])
-  const height = Number(headBlock.height)
-  expect(res[0][0].height).toEqual(height)
+  const height = Number(headBlock.header.height)
+  expect(res[0][0].header.height).toEqual(height)
   // expect 2 null blocks
-  expect(res[1][0]).toEqual({height: height - 1})
-  expect(res[2][0]).toEqual({height: height - 2})
+  expect(res[1][0].header).toEqual({height: height - 1})
+  expect(res[2][0].header).toEqual({height: height - 2})
 
-  expect(res[3][0].cid).toEqual(headBlock.parents[0]['/'])
-  expect(res[4][0].cid).toEqual(parent1.parents[0]['/'])
-  expect(res[5][0].cid).toEqual(parent2.parents[0]['/'])
+  expect(res[3][0].cid).toEqual(headBlock.header.parents[0]['/'])
+  expect(res[4][0].cid).toEqual(parent1.header.parents[0]['/'])
+  expect(res[5][0].cid).toEqual(parent2.header.parents[0]['/'])
 })
 
 test('fetchParents', async () => {
@@ -98,7 +96,7 @@ test('fetchParents', async () => {
   const parents = await chainApi.fetchParents(block)
 
   expect(parents.length).toBe(1)
-  expect(parents[0].cid).toEqual(block.parents[0]['/'])
+  expect(parents[0].cid).toEqual(block.header.parents[0]['/'])
 })
 
 test('fetchChildren', async () => {
@@ -114,7 +112,12 @@ test('fetchChildren', async () => {
   const pageSize = 6
   const res = await chainApi.fetchChain(pageSize)
 
-  // no children of null blocks
+    // no children of null blocks
+    console.log(res)
+    console.log(res[0])
+    console.log(res[1])
+    console.log(res[2])
+    console.log(res[3])            
   let children = await chainApi.fetchChildren(res[1][0])
   expect(children.length).toBe(0)
 

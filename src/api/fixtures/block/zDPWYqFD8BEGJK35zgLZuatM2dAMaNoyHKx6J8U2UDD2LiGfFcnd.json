@@ -1,17 +1,19 @@
 {
-  "miner": "",
-  "ticket": null,
-  "parents": [
-    {
-      "/": "zDPWYqFD7n8g4dJX1WJqPy7X9aPpAidhXyJUbHruSiuiMtpDehkW"
+  "header": {
+    "miner": "",
+    "ticket": null,
+    "parents": [
+      {
+        "/": "zDPWYqFD7n8g4dJX1WJqPy7X9aPpAidhXyJUbHruSiuiMtpDehkW"
+      }
+    ],
+    "parentWeight": "50",
+    "height": "8",
+    "nonce": "5",
+    "stateRoot": {
+      "/": "zdpuAm8mTU17dB5mckEDSNXFtvuxVESUhKivSLCWw1kMZjdK9"
     }
-  ],
-  "parentWeight": "50",
-  "height": "8",
-  "nonce": "5",
-  "messages": [],
-  "stateRoot": {
-    "/": "zdpuAm8mTU17dB5mckEDSNXFtvuxVESUhKivSLCWw1kMZjdK9"
   },
-  "messageReceipts": []
+  "messageReceipts": [],
+  "messages": []      
 }
