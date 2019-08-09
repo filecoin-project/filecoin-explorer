@@ -66,10 +66,10 @@ class Chain {
   createNullGenerations (headBlock, parentBlock) {
     const nullGenerations = []
     if (headBlock && parentBlock) {
-      let hh = headBlock.height
-      let ph = parentBlock.height
+      let hh = headBlock.header.height
+      let ph = parentBlock.header.height
       for (let i = hh - 1; i > ph; i--) {
-        nullGenerations.push([{height: i}])
+        nullGenerations.push([{header: {height: i}}])
       }
     }
     return nullGenerations
@@ -87,23 +87,25 @@ class Chain {
     const found = this.blockByCid[cid]
     if (found) return found
 
-    const promise = api.getJson(`/api/show/block/${cid}`)
+      const fullBlockPromise = api.getJson(`/api/show/block/${cid}`).then(fullBlock => {
+        return {
+	  cid: cid,
+          header: mapAllBigInts(fullBlock.Header),
+          messages: fullBlock.Messages,
+          messageReceipts: fullBlock.Receipts
+        }
+      });
+      
     // Handle if another req for the same cid comes in while we're waiting for this one.
     // fetchBlock is an async funtion, so it always returns a promise.
-    this.blockByCid[cid] = promise
+    this.blockByCid[cid] = fullBlockPromise
 
-    const response = await promise
+    const fullBlock = await fullBlockPromise
 
-    const block = {
-      cid: cid,
-      ...mapAllBigInts(response)
-    }
+    this.blockByCid[cid] = fullBlock
+    this.addBlockToChain(fullBlock)
 
-    this.blockByCid[cid] = block
-
-    this.addBlockToChain(block)
-
-    return Object.assign({}, block)
+    return Object.assign({}, fullBlock)
   }
 
   /**
@@ -130,7 +132,7 @@ class Chain {
    * Checks to see if any of that generation point to this block.
    */
   async fetchChildren (block) {
-    const {height} = block
+    const height = block.header.height
     const maxHeight = this.chainCache.length - 1
     if (height >= maxHeight) return null
     let nextGen = null
@@ -147,8 +149,8 @@ class Chain {
   }
 
   // Helper method to check for dupes before adding a new block
-  addBlockToChain (newBlock) {
-    const {height} = newBlock
+    addBlockToChain (newBlock) {
+    const height = newBlock.header.height
     const generation = this.chainCache[height] || []
     if (generation.some(block => block.cid === newBlock.cid)) {
       return // alredy exists, don't add it again.
@@ -157,7 +159,7 @@ class Chain {
   }
 
   static getParentCids (block) {
-    return (block && block.parents && block.parents.map(Chain.getCid)) || []
+    return (block && block.header.parents && block.header.parents.map(Chain.getCid)) || []
   }
 
   static getCid (thing) {

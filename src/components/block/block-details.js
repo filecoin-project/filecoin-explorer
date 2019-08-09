@@ -73,8 +73,8 @@ class BlockDetails extends Component {
                     <img src={arrowUp} alt='' className='dib v-mid' />
                   </Link>
                 ) : null}
-                {block.parents ?
-                  <Link to={`/blocks/${block.parents[0]['/']}${hash}`} className='db absolute bottom-0 ph2 pv1 charcoal bg-snow br1 f6 link focus-outline' title='Older'>
+                {block.header.parents ?
+                  <Link to={`/blocks/${block.header.parents[0]['/']}${hash}`} className='db absolute bottom-0 ph2 pv1 charcoal bg-snow br1 f6 link focus-outline' title='Older'>
                     <img src={arrowDown} alt='' className='dib v-mid' />
                   </Link>
                  : null}
