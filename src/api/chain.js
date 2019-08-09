@@ -1,6 +1,5 @@
 import api from './api'
 import { mapAllBigInts } from './util'
-var Promise = require('promise');
 
 /*
   Chain - a caching view on the blocks we've seen so far.
@@ -89,13 +88,12 @@ class Chain {
     if (found) return found
 
       const fullBlockPromise = api.getJson(`/api/show/block/${cid}`).then(fullBlock => {
-          return {
-	   cid: cid,
+        return {
+	  cid: cid,
           header: mapAllBigInts(fullBlock.Header),
           messages: fullBlock.Messages,
           messageReceipts: fullBlock.Receipts
         }
-      return decFullBlock
       });
       
     // Handle if another req for the same cid comes in while we're waiting for this one.
@@ -105,7 +103,6 @@ class Chain {
     const fullBlock = await fullBlockPromise
 
     this.blockByCid[cid] = fullBlock
-     console.log(fullBlock)
     this.addBlockToChain(fullBlock)
 
     return Object.assign({}, fullBlock)
