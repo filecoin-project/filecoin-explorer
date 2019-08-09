@@ -89,15 +89,14 @@ class Chain {
     if (found) return found
 
       const fullBlockPromise = api.getJson(`/api/show/block/${cid}`).then(fullBlock => {
-	  console.log(fullBlock)
-      var decFullBlock = {
-	cid: cid,
-        header: mapAllBigInts(fullBlock.Header),
-        messages: fullBlock.Messages,
-        messageReceipts: fullBlock.Receipts
-      }
+          return {
+	   cid: cid,
+          header: mapAllBigInts(fullBlock.Header),
+          messages: fullBlock.Messages,
+          messageReceipts: fullBlock.Receipts
+        }
       return decFullBlock
-    });
+      });
       
     // Handle if another req for the same cid comes in while we're waiting for this one.
     // fetchBlock is an async funtion, so it always returns a promise.
@@ -153,7 +152,7 @@ class Chain {
   }
 
   // Helper method to check for dupes before adding a new block
-  addBlockToChain (newBlock) {
+    addBlockToChain (newBlock) {
     const height = newBlock.header.height
     const generation = this.chainCache[height] || []
     if (generation.some(block => block.cid === newBlock.cid)) {

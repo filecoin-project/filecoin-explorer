@@ -26,7 +26,9 @@ test('fetchBlock', async () => {
   let block = await chainApi.fetchBlock(cid)
   var expected = {
     cid: chainHeadRes[0]['/'],
-    header: headBlock.header
+      header: headBlock.Header,
+      messages: headBlock.Messages,
+      messageReceipts: headBlock.Receipts
   }
   expected.header.height = Number(expected.header.height)
   expected.header.nonce = Number(expected.header.nonce)
@@ -49,7 +51,9 @@ test('fetchHeadBlock', async () => {
   const block = await chainApi.fetchHeadBlock()
   var expected = {
       cid: chainHeadRes[0]['/'],
-      header: headBlock.header
+      header: headBlock.Header,
+      messages: headBlock.Messages,
+      messageReceipts: headBlock.Receipts
   }
   expected.header.height = Number(expected.header.height)
   expected.header.nonce = Number(expected.header.nonce)
@@ -73,15 +77,15 @@ test('fetchChain', async () => {
 
   expect(res.length).toBe(pageSize)
   expect(res[0][0].cid).toEqual(chainHeadRes[0]['/'])
-  const height = Number(headBlock.header.height)
+  const height = Number(headBlock.Header.height)
   expect(res[0][0].header.height).toEqual(height)
   // expect 2 null blocks
   expect(res[1][0].header).toEqual({height: height - 1})
   expect(res[2][0].header).toEqual({height: height - 2})
 
-  expect(res[3][0].cid).toEqual(headBlock.header.parents[0]['/'])
-  expect(res[4][0].cid).toEqual(parent1.header.parents[0]['/'])
-  expect(res[5][0].cid).toEqual(parent2.header.parents[0]['/'])
+  expect(res[3][0].cid).toEqual(headBlock.Header.parents[0]['/'])
+  expect(res[4][0].cid).toEqual(parent1.Header.parents[0]['/'])
+  expect(res[5][0].cid).toEqual(parent2.Header.parents[0]['/'])
 })
 
 test('fetchParents', async () => {
@@ -113,11 +117,6 @@ test('fetchChildren', async () => {
   const res = await chainApi.fetchChain(pageSize)
 
     // no children of null blocks
-    console.log(res)
-    console.log(res[0])
-    console.log(res[1])
-    console.log(res[2])
-    console.log(res[3])            
   let children = await chainApi.fetchChildren(res[1][0])
   expect(children.length).toBe(0)
 
