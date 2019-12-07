@@ -29,7 +29,7 @@ class Chain extends Component {
       // presage the update with some spinner
       this.setState({loading: true})
       await this.pause(1200)
-      this.loadData()
+      // this.loadData()
     } catch (err) {
       console.error(err)
       this.setState({hasError: true, loading: false})
@@ -69,8 +69,8 @@ class Chain extends Component {
     return (
       <div>
         <FlipMove enterAnimation='fade' leaveAnimation='fade'>
-        {chain ? chain.filter((gen) => gen.length > 0).map((gen) => (
-            <Generation blocks={gen} key={gen && gen[0].height} />
+        {chain ? chain.filter((gen) => gen.length > 0).map((gen, i) => (
+            <Generation blocks={gen} key={i} />
         )) : null}
         </FlipMove>
         <Spinner loading={loading} style={{top: '26px', left: '31px'}} />

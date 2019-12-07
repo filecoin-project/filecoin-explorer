@@ -31,7 +31,8 @@ class BlockDetails extends Component {
         block = await chainApi.fetchHeadBlock()
       }
       const parents = await chainApi.fetchParents(block)
-      const children = await chainApi.fetchChildren(block)
+      // const children = await chainApi.fetchChildren(block)
+      const children = []
       this.setState({cid, block, parents, children, loading: false})
     } catch (err) {
       console.error(err)

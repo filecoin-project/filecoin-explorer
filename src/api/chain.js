@@ -1,5 +1,6 @@
 import api from './api'
 import { mapAllBigInts } from './util'
+import chain from './chain.json'
 
 /*
   Chain - a caching view on the blocks we've seen so far.
@@ -45,22 +46,25 @@ class Chain {
    * of blocks with the same height
    */
   async fetchChain (pageSize = 20, startCid) {
-    let nextBlock = null
-    if (!startCid) {
-      nextBlock = await this.fetchHeadBlock()
-    } else {
-      nextBlock = await this.fetchBlock(startCid)
-    }
-    // init the chain with the head block
-    let section = [[nextBlock]]
-    while (section.length < pageSize) {
-      let generation = await this.fetchParents(nextBlock)
-      let parentBlock = generation[0]
-      let nulls = this.createNullGenerations(nextBlock, parentBlock)
-      section = section.concat(nulls).concat([generation])
-      nextBlock = parentBlock
-    }
-    return section
+    return Object.keys(chain).sort((a, b) => b - a).map(height => chain[height])
+    // let nextBlock = null
+    // if (!startCid) {
+    //   nextBlock = await this.fetchHeadBlock()
+    // } else {
+    //   nextBlock = await this.fetchBlock(startCid)
+    // }
+
+    // // init the chain with the head block
+    // let section = [[nextBlock]]
+
+    // while (section.length < pageSize) {
+    //   let generation = await this.fetchParents(nextBlock)
+    //   let parentBlock = generation[0]
+    //   let nulls = this.createNullGenerations(nextBlock, parentBlock)
+    //   section = section.concat(nulls).concat([generation])
+    //   nextBlock = parentBlock
+    // }
+    // return section
   }
 
   createNullGenerations (headBlock, parentBlock) {
@@ -83,29 +87,31 @@ class Chain {
    * `chainCache` and `blockByCid`.
    */
   async fetchBlock (cid) {
+    // return a random block for the time being until we connect lotus
+    return chain[Object.keys(chain)[10]][0]
     // found is either the block or a promise of the block.
-    const found = this.blockByCid[cid]
-    if (found) return found
+    // const found = this.blockByCid[cid]
+    // if (found) return found
 
-      const fullBlockPromise = api.getJson(`/api/show/block/${cid}`).then(fullBlock => {
-        return {
-	  cid: cid,
-          header: mapAllBigInts(fullBlock.Header),
-          messages: fullBlock.Messages,
-          messageReceipts: fullBlock.Receipts
-        }
-      });
-      
-    // Handle if another req for the same cid comes in while we're waiting for this one.
-    // fetchBlock is an async funtion, so it always returns a promise.
-    this.blockByCid[cid] = fullBlockPromise
+    //   const fullBlockPromise = api.getJson(`/api/show/block/${cid}`).then(fullBlock => {
+    //     return {
+	  // cid: cid,
+    //       header: mapAllBigInts(fullBlock.Header),
+    //       messages: fullBlock.Messages,
+    //       messageReceipts: fullBlock.Receipts
+    //     }
+    //   });
 
-    const fullBlock = await fullBlockPromise
+    // // Handle if another req for the same cid comes in while we're waiting for this one.
+    // // fetchBlock is an async funtion, so it always returns a promise.
+    // this.blockByCid[cid] = fullBlockPromise
 
-    this.blockByCid[cid] = fullBlock
-    this.addBlockToChain(fullBlock)
+    // const fullBlock = await fullBlockPromise
 
-    return Object.assign({}, fullBlock)
+    // this.blockByCid[cid] = fullBlock
+    // this.addBlockToChain(fullBlock)
+
+    // return Object.assign({}, fullBlock)
   }
 
   /**
