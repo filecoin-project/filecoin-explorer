@@ -41,12 +41,9 @@ const Ticket = ({ proof }) => (
 
 export const Block = ({block, secondary, truncate, onClick}) => {
   const { cid, header, messages, messageReceipts = [] } = block
-  const { height, miner, tickets, stateRoot, parentWeightNumerator, parentWeightDenominator = [] } = header
+  const { height, miner, tickets, stateRoot, parentWeight } = header
   const isNullBlock = !cid
-  const parentWeight = (parentWeightNumerator / parentWeightDenominator) || 0
-  const parentWeightStr = parentWeight > 10000 ? parentWeight.toExponential(1) : parentWeight.toLocaleString(2)
   const bg = isNullBlock || secondary ? '#EDF0F4' : '#DEF2FF'
-  console.log(stateRoot)
   return (
     <MaybeLink
       block={block}
@@ -86,8 +83,8 @@ export const Block = ({block, secondary, truncate, onClick}) => {
           </Stat>
         )}
         {truncate ? null : (
-          <Stat label="Power" bg="#6C6C6C">
-            {parentWeightStr}
+          <Stat label="Parent weight" bg="#6C6C6C">
+            {parentWeight}
           </Stat>
         )}
       </span>

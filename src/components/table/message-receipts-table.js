@@ -3,15 +3,12 @@ import ExitCode from '../actor/exit-code'
 import { Table, Td, Th } from './table'
 
 const MessageReceiptRow = ({row}) => {
-  let returns = []
-  if (row.return && row.return.length > 0) {
-    returns = row.return.map((v) => Buffer.from(v, 'base64').toString('hex'))
-  }
 
   return (
     <tr>
       <Td align='right'><ExitCode value={row.exitCode} /></Td>
-      <Td>[{returns.join(', ')}]</Td>
+      <Td align='left'>{row.gasUsed}</Td>
+      <Td>{row.return}</Td>
     </tr>
   )
 }
@@ -24,6 +21,7 @@ const MessageReceiptsTable = ({data}) => {
       <thead>
         <tr>
           <Th>Exit Code</Th>
+          <Th>Gas used</Th>
           <Th>Returns</Th>
         </tr>
       </thead>

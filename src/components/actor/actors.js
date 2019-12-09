@@ -44,7 +44,7 @@ export function Actor ({actor}) {
     <section className='bg-snow ba b--black-10 mt3 mb4 mw7'>
       <h2 className='ma0 f6 tracked charcoal montserrat fw4 ttu bb b--black-10'>
         <ActorIcon type={actor.actorType} className='v-mid mh1' />
-        {/* <span className='v-mid charcoal'>{actor.actorType.replace('Actor', '')}</span> */}
+        <span className='v-mid charcoal'>{actor.actorType.replace('Actor', '')}</span>
       </h2>
       <div className='pv2 ph3 lh-copy bg-snow-muted'>
         <dl className='f7' display='inline'>
@@ -60,7 +60,7 @@ export function Actor ({actor}) {
           <dd>{actor.nonce}</dd>
           <dt className='ttu fw4 silver'>Balance</dt>
           <dd>{actor.balance}</dd>
-          {/* <Memory memory={actor.memory} actorType={actor.actorType} /> */}
+          <Memory memory={actor.memory} actorType={actor.actorType} />
         </dl>
         {/* <Exports exports={actor.exports} /> */}
       </div>
