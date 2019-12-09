@@ -4,7 +4,6 @@ import Block from './block'
 class Generation extends React.Component {
   render () {
     const {blocks} = this.props
-    console.log(blocks)
     if (!blocks) return null
     return (
       <div className='nowrap'>
