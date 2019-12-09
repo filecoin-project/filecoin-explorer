@@ -1,6 +1,9 @@
 import api from './api'
 import { mapAllBigInts } from './util'
 import chain from './chain.json'
+import {Lotus} from '@openworklabs/lotus-block-explorer'
+
+const lotus = new Lotus({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJyZWFkIiwid3JpdGUiLCJzaWduIiwiYWRtaW4iXX0.rVED8Ma-YbiaAn0bpJA2ruFQA751pTomNzxOs4pTxVE'})
 
 /*
   Chain - a caching view on the blocks we've seen so far.
@@ -46,6 +49,7 @@ class Chain {
    * of blocks with the same height
    */
   async fetchChain (pageSize = 20, startCid) {
+    // await lotus.explore({fromHeight: 15000})
     return Object.keys(chain).sort((a, b) => b - a).map(height => chain[height])
     // let nextBlock = null
     // if (!startCid) {

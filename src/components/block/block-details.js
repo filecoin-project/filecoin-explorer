@@ -52,6 +52,7 @@ class BlockDetails extends Component {
 
   render () {
     const {block, parents, children, hasError, loading} = this.state
+    console.log(parents)
     const {hash} = window.location
     const clearError = () => { this.setState({hasError: false}) }
     if (hasError) {

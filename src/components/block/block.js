@@ -46,6 +46,7 @@ export const Block = ({block, secondary, truncate, onClick}) => {
   const parentWeight = (parentWeightNumerator / parentWeightDenominator) || 0
   const parentWeightStr = parentWeight > 10000 ? parentWeight.toExponential(1) : parentWeight.toLocaleString(2)
   const bg = isNullBlock || secondary ? '#EDF0F4' : '#DEF2FF'
+  console.log(stateRoot)
   return (
     <MaybeLink
       block={block}
