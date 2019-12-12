@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ChainApi from './api/chain'
-import fetchActors from './api/actors'
 import Nav from './components/nav/nav'
 import ChainView from './components/block/chain'
 import Actors from './components/actor/actors'
@@ -11,7 +10,7 @@ import BlockDetails from './components/block/block-details'
 const chainApi = new ChainApi()
 
 const ActorsPageContainer = () => {
-  return <Actors fetchActors={fetchActors} />
+  return <Actors />
 }
 
 const BlockPageContainer = ({match}) => {
