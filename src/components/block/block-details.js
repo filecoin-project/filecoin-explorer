@@ -17,6 +17,7 @@ class BlockDetails extends Component {
       block: false,
       hasError: false,
       loading: true,
+      paginating: false
     };
   }
 
@@ -63,6 +64,7 @@ class BlockDetails extends Component {
         </ErrorModal>
       );
     }
+
     if (!loading && !block) {
       return (
         <div>
@@ -70,6 +72,15 @@ class BlockDetails extends Component {
         </div>
       );
     }
+
+    if (loading) {
+      return (
+        <>
+          <h3>Block details are loading...</h3>
+        </>
+      );
+    }
+
     return (
       <div>
         {block ? (

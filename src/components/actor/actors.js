@@ -17,8 +17,9 @@ export default class Actors extends Component {
     this.state = {
       hasError: false,
       loading: true,
+      paginating: false,
       lastActorIndex: 0,
-      actors: [],
+      actors: []
     };
   }
 
@@ -28,15 +29,17 @@ export default class Actors extends Component {
   }
 
   getActors = async (to, from) => {
+    this.setState({...this.state, paginating: true})
     const actors = await lotus.listActors(to, from);
     this.setState({
       actors: [...this.state.actors, ...actors],
       lastActorIndex: from,
+      paginating: false
     });
   };
 
   render() {
-    const { actors, hasError, loading } = this.state;
+    const { actors, hasError, loading, paginating } = this.state;
     const clearError = () => this.setState({ hasError: false });
     if (hasError) {
       return (
@@ -45,34 +48,51 @@ export default class Actors extends Component {
         </ErrorModal>
       );
     }
+    
     if (!loading && !actors) {
       return <h2>No Actors</h2>;
     }
+
+    if (loading) {
+      return (
+        <>
+          <h3>Actors are loading...</h3>
+        </>
+      );
+    }
+
     return (
       <div>
         {actors
           ? actors.map((data, i) => <Actor actor={data} key={i} />)
           : null}
         <Spinner loading={loading} style={{ top: '26px', left: '31px' }} />
-        <div
-          style={{
-            cursor: 'pointer',
-            marginTop: '10px',
-            width: '30px',
-            height: 'auto',
-          }}
-          className="db bottom-0 ph2 pv1 charcoal bg-snow br1 f6 link focus-outline"
-          title="Older"
-          role="button"
-          onClick={() =>
-            this.getActors(
-              this.state.lastActorIndex,
-              this.state.lastActorIndex + 4
-            )
-          }
-        >
-          <img src={arrowDown} alt="" className="dib v-mid" />
-        </div>
+        {!paginating && 
+          <div
+            style={{
+              cursor: 'pointer',
+              marginTop: '10px',
+              width: '30px',
+              height: 'auto',
+            }}
+            className="db bottom-0 ph2 pv1 charcoal bg-snow br1 f6 link focus-outline"
+            title="Older"
+            role="button"
+            onClick={() =>
+              this.getActors(
+                this.state.lastActorIndex,
+                this.state.lastActorIndex + 4
+              )
+            }
+          >
+            <img src={arrowDown} alt="" className="dib v-mid" />
+          </div>
+        }
+        {paginating && 
+          <div style={{ height: '50px' }}>
+            <Spinner loading={true} style={{ top: '20px', left: '31px', position: 'relative', height: '20px' }} />
+          </div>
+        }
       </div>
     );
   }

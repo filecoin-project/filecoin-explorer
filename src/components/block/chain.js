@@ -15,7 +15,7 @@ class Chain extends Component {
     super(props);
     this.state = {
       chain: false,
-      loading: true,
+      paginating: false,
       hasError: false,
       numUpdatesFromChain: 0,
     };
@@ -30,6 +30,7 @@ class Chain extends Component {
       chain: convertChainStateToArray(chainState),
       // we count the number of chain updates so we dont show any blank screens
       numUpdatesFromChain: this.state.numUpdatesFromChain + 1,
+      paginating: false,
     });
   };
 
@@ -57,7 +58,7 @@ class Chain extends Component {
   }
 
   render() {
-    const { chain, hasError, numUpdatesFromChain } = this.state;
+    const { chain, hasError, numUpdatesFromChain, paginating } = this.state;
     const clearError = () => this.setState({ hasError: false });
 
     // wait until 3 chain updates come in before marking "loading" as complete
@@ -86,7 +87,7 @@ class Chain extends Component {
     if (loading) {
       return (
         <>
-          <h3>Chain is loading</h3>
+          <h3>Chain is loading...</h3>
           <p>Blocks will be streamed starting from the Chain Head</p>
         </>
       );
@@ -100,20 +101,30 @@ class Chain extends Component {
                 .filter(gen => gen.length > 0)
                 .map((gen, i) => <Generation blocks={gen} key={i} />)
             : null}
-          <div
-            style={{
-              cursor: 'pointer',
-              marginTop: '10px',
-              width: '30px',
-              height: 'auto',
-            }}
-            className="db bottom-0 ph2 pv1 charcoal bg-snow br1 f6 link focus-outline"
-            title="Older"
-            role="button"
-            onClick={this.props.chainApi.loadNextBlocks}
-          >
-            <img src={arrowDown} alt="" className="dib v-mid" />
-          </div>
+          {!paginating && numUpdatesFromChain > 5 &&
+            <div
+              style={{
+                cursor: 'pointer',
+                marginTop: '10px',
+                width: '30px',
+                height: '30px',
+              }}
+              className="db bottom-0 ph2 pv1 charcoal bg-snow br1 f6 link focus-outline"
+              title="Older"
+              role="button"
+              onClick={() => {
+                this.setState({paginating: true})
+                this.props.chainApi.loadNextBlocks()
+              }}
+            >
+              <img src={arrowDown} alt="" className="dib v-mid" />
+            </div>
+          }
+          {paginating &&
+            <div style={{ height: '60px' }}>
+              <Spinner loading style={{ top: '40px', left: '31px', position: 'relative', height: '20px' }} />
+            </div>
+          }
         </FlipMove>
         <Spinner loading={loading} style={{ top: '26px', left: '31px' }} />
       </div>
