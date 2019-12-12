@@ -1,7 +1,11 @@
-import api from './api'
-import actors from './actors.json'
+import { Lotus } from '@openworklabs/lotus-block-explorer';
 
-export default function fetchActors () {
-  return Promise.resolve(actors)
-  return api.getNdJson(`/api/actor/ls`)
+const lotus = new Lotus({
+  jsonrpcEndpoint: 'https://lotus-dev.temporal.cloud/rpc/v0',
+});
+
+export default async function fetchActors() {
+  const actors = await lotus.listActors();
+  console.log(actors);
+  return actors;
 }
