@@ -16,6 +16,7 @@ class Chain extends Component {
     this.state = {
       chain: false,
       paginating: false,
+      page: 1,
       hasError: false,
       numUpdatesFromChain: 0,
     };
@@ -101,7 +102,7 @@ class Chain extends Component {
                 .filter(gen => gen.length > 0)
                 .map((gen, i) => <Generation blocks={gen} key={i} />)
             : null}
-          {!paginating && numUpdatesFromChain > 5 &&
+          {!paginating && numUpdatesFromChain > 5 && this.state.page < 5 &&
             <div
               style={{
                 cursor: 'pointer',
@@ -113,7 +114,7 @@ class Chain extends Component {
               title="Older"
               role="button"
               onClick={() => {
-                this.setState({paginating: true})
+                this.setState({paginating: true, page: this.state.page + 1})
                 this.props.chainApi.loadNextBlocks()
               }}
             >
