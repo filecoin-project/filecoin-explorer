@@ -5,9 +5,9 @@ export const ErrorContext = React.createContext({})
 
 const ErrorMessage = ({error}) => (
   <div className='pv4 pr4' style={{ paddingLeft: 60 }}>
-    <h3>Oops! Got a bug.</h3>
+    <h3>Oops!</h3>
     <p>> {error}</p>
-    <p>Hit us up on the <a href="https://filecoinproject.slack.com/ ">Filecoin slack</a> or file an issue on our <a href="https://github.com/openworklabs/filecoin-explorer">GitHub</a></p>
+    <p>We'll see this error soon, but feel free to bring it to our attention in the <a href="https://filecoinproject.slack.com/ ">Filecoin slack</a> or a <a href="https://github.com/openworklabs/filecoin-explorer">GitHub issue.</a></p>
   </div>
 )
 
