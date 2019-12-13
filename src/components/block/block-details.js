@@ -81,6 +81,7 @@ class BlockDetails extends Component {
               </div>
               <div
                 className="dib relative ml4"
+                id="next-block-arrow"
                 style={{ height: 200, width: 100 }}
               >
                 {children && children.length ? (

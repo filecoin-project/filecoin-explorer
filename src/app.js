@@ -26,7 +26,7 @@ const Main = () => (
     <Router>
       <ErrorHandler>
         <Nav />
-        <div className='pv4 pr4' style={{ paddingLeft: 60 }}>
+        <div className='pv4 pr4' id='page-container' style={{ paddingLeft: 60 }}>
           <Switch>
             <Route exact path='/' component={ChainPageContainer} />
             <Route exact path='/head' component={BlockPageContainer} />

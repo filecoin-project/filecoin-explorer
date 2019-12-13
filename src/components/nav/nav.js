@@ -17,7 +17,7 @@ class Nav extends React.Component {
           <NavLink to={`/head${hash}`} className='dib link snow ph4 pv3 focus-outline' activeClassName='bg-navy-muted'>Best Block</NavLink>
           <NavLink to={`/actors${hash}`} className='dib link snow ph4 pv3 focus-outline' activeClassName='bg-navy-muted'>Actors</NavLink>
         </nav>
-        <div className='dtc tr v-mid montserrat fw2 f4 aqua ph4' style={{ width: 250 }}>Filecoin Explorer</div>
+        <div className='dtc tr v-mid montserrat fw2 f4 aqua ph4' id='product-name' style={{ width: 250 }}>Filecoin Explorer</div>
       </div>
     )
   }
