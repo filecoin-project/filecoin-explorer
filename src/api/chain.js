@@ -52,6 +52,7 @@ class Chain {
   async fetchChain(handleError) {
     try {
       const { Height } = await lotus.getChainHead();
+      if (Height === 0) throw new Error('chain sync in progress')
       await lotus.explore({
         fromHeight: Height - 5,
         toHeight: Height - 1,
