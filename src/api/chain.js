@@ -49,12 +49,16 @@ class Chain {
    * Each item in the chain array is an array of blocks; a generation
    * of blocks with the same height
    */
-  async fetchChain() {
-    const { Height } = await lotus.getChainHead();
-    await lotus.explore({
-      fromHeight: Height - 5,
-      toHeight: Height - 1,
-    });
+  async fetchChain(handleError) {
+    try {
+      const { Height } = await lotus.getChainHead();
+      await lotus.explore({
+        fromHeight: Height - 5,
+        toHeight: Height - 1,
+      });
+    } catch (err) {
+      handleError(err)
+    }
   }
 
   getChain = () => lotus.getChain();

@@ -9,13 +9,13 @@ import ErrorModal from '../error/error-modal.js';
 import Spinner from '../loading/spinner';
 import arrowUp from './arrow-up.svg';
 import arrowDown from './arrow-down.svg';
+import { ErrorContext } from '../error';
 
 class BlockDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       block: false,
-      hasError: false,
       loading: true,
       paginating: false
     };
@@ -36,8 +36,8 @@ class BlockDetails extends Component {
       const children = [];
       this.setState({ cid, block, parents, children, loading: false });
     } catch (err) {
-      console.error(err);
-      this.setState({ cid, hasError: true, loading: false });
+      this.context.setError(err)
+      this.setState({ cid, loading: false });
     }
   }
 
@@ -52,18 +52,8 @@ class BlockDetails extends Component {
   }
 
   render() {
-    const { block, parents, children, hasError, loading } = this.state;
+    const { block, parents, children, loading } = this.state;
     const { hash } = window.location;
-    const clearError = () => {
-      this.setState({ hasError: false });
-    };
-    if (hasError) {
-      return (
-        <ErrorModal subject="Something went wrong" onClose={clearError}>
-          Block details could not be loaded.
-        </ErrorModal>
-      );
-    }
 
     if (!loading && !block) {
       return (
@@ -144,5 +134,7 @@ class BlockDetails extends Component {
     );
   }
 }
+
+BlockDetails.contextType = ErrorContext
 
 export default BlockDetails;

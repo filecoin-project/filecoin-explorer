@@ -5,6 +5,7 @@ import Nav from './components/nav/nav'
 import ChainView from './components/block/chain'
 import Actors from './components/actor/actors'
 import BlockDetails from './components/block/block-details'
+import ErrorHandler from './components/error'
 
 // Caching api wrapper for chain and block data
 const chainApi = new ChainApi()
@@ -22,21 +23,21 @@ const ChainPageContainer = () => {
 }
 
 const Main = () => (
-  <Router>
-    <div>
-      <Nav />
-      <div className='pv4 pr4' style={{paddingLeft: 60}}>
-        <Switch>
-          <Route exact path='/' component={ChainPageContainer} />
-          <Route exact path='/head' component={BlockPageContainer} />
-          <Route exact path='/actors' component={ActorsPageContainer} />
-          <Route path='/chain/:cid' component={ChainPageContainer} />
-          <Route path='/blocks/:cid' component={BlockPageContainer} />
-          <Route render={() => <h3>404</h3>} />
-        </Switch>
-      </div>
-    </div>
-  </Router>
+    <Router>
+      <ErrorHandler>
+        <Nav />
+        <div className='pv4 pr4' style={{ paddingLeft: 60 }}>
+          <Switch>
+            <Route exact path='/' component={ChainPageContainer} />
+            <Route exact path='/head' component={BlockPageContainer} />
+            <Route exact path='/actors' component={ActorsPageContainer} />
+            <Route path='/chain/:cid' component={ChainPageContainer} />
+            <Route path='/blocks/:cid' component={BlockPageContainer} />
+            <Route render={() => <h3>404</h3>} />
+          </Switch>
+        </div>
+      </ErrorHandler>
+    </Router>
 )
 
 export default Main

@@ -6,6 +6,7 @@ import Inspector from '../object/inspector';
 import ActorIcon from '../actor/actor-icon';
 import Spinner from '../loading/spinner';
 import arrowDown from '../block/arrow-down.svg';
+import {ErrorContext} from '../error'
 
 const lotus = new Lotus({
   jsonrpcEndpoint: 'https://lotus-dev.temporal.cloud/rpc/v0',
@@ -30,12 +31,16 @@ export default class Actors extends Component {
 
   getActors = async (to, from) => {
     this.setState({...this.state, paginating: true})
-    const actors = await lotus.listActors(to, from);
-    this.setState({
-      actors: [...this.state.actors, ...actors],
-      lastActorIndex: from,
-      paginating: false
-    });
+    try {
+      const actors = await lotus.listActors(to, from);
+      this.setState({
+        actors: [...this.state.actors, ...actors],
+        lastActorIndex: from,
+        paginating: false
+      });
+    } catch (err) {
+      this.context.setError(err)
+    }
   };
 
   render() {
@@ -48,7 +53,7 @@ export default class Actors extends Component {
         </ErrorModal>
       );
     }
-    
+
     if (!loading && !actors) {
       return <h2>No Actors</h2>;
     }
@@ -67,7 +72,7 @@ export default class Actors extends Component {
           ? actors.map((data, i) => <Actor actor={data} key={i} />)
           : null}
         <Spinner loading={loading} style={{ top: '26px', left: '31px' }} />
-        {!paginating && 
+        {!paginating &&
           <div
             style={{
               cursor: 'pointer',
@@ -88,7 +93,7 @@ export default class Actors extends Component {
             <img src={arrowDown} alt="" className="dib v-mid" />
           </div>
         }
-        {paginating && 
+        {paginating &&
           <div style={{ height: '50px' }}>
             <Spinner loading={true} style={{ top: '20px', left: '31px', position: 'relative', height: '20px' }} />
           </div>
@@ -97,6 +102,8 @@ export default class Actors extends Component {
     );
   }
 }
+
+Actors.contextType = ErrorContext
 
 export function Actor({ actor }) {
   return (

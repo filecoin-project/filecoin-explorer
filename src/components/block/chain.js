@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
-import ErrorModal from '../error/error-modal';
 import Spinner from '../loading/spinner';
 import Generation from './generation';
 import arrowDown from './arrow-down.svg';
+import { ErrorContext } from '../error'
 
 const convertChainStateToArray = chainState =>
   Object.keys(chainState)
@@ -17,7 +17,6 @@ class Chain extends Component {
       chain: false,
       paginating: false,
       page: 1,
-      hasError: false,
       numUpdatesFromChain: 0,
     };
   }
@@ -36,17 +35,27 @@ class Chain extends Component {
   };
 
   componentDidMount() {
-    const arrayChain = convertChainStateToArray(this.props.chainApi.getChain());
-    this.setState({
-      chain: arrayChain,
-      numUpdatesFromChain: arrayChain.length,
-    });
-    // subscribe to new chain events
-    this.props.chainApi.subscribe(this.storeSubscriptionCallback);
-    // get collect a few blocks starting at head - 1
-    this.props.chainApi.fetchChain();
-    // poll lotus for new chain updates and update the observable store
-    this.props.chainApi.listen();
+    // loading the chain is a non blocking, asyncronous operation
+    this.loadChain()
+  }
+
+  async loadChain() {
+    try {
+      const arrayChain = convertChainStateToArray(this.props.chainApi.getChain());
+      this.setState({
+        chain: arrayChain,
+        numUpdatesFromChain: arrayChain.length,
+      });
+      // subscribe to new chain events
+      this.props.chainApi.subscribe(this.storeSubscriptionCallback);
+      // get collect a few blocks starting at head - 1
+      // HACK - todo: clean up - we pass the error setter to asyncronously set errors if one occurs
+      this.props.chainApi.fetchChain(this.context.setError);
+      // poll lotus for new chain updates and update the observable store
+      this.props.chainApi.listen();
+    } catch (err) {
+      this.context.setError(err)
+    }
   }
 
   componentWillUnmount() {
@@ -59,19 +68,10 @@ class Chain extends Component {
   }
 
   render() {
-    const { chain, hasError, numUpdatesFromChain, paginating } = this.state;
-    const clearError = () => this.setState({ hasError: false });
+    const { chain, numUpdatesFromChain, paginating } = this.state;
 
     // wait until 3 chain updates come in before marking "loading" as complete
     const loading = numUpdatesFromChain < 3;
-
-    if (hasError) {
-      return (
-        <ErrorModal subject="Something went wrong" onClose={clearError}>
-          Chain could not be loaded.
-        </ErrorModal>
-      );
-    }
 
     if (!loading && !chain) {
       return <h2>No Chain (something probably went wrong)</h2>;
@@ -115,7 +115,11 @@ class Chain extends Component {
               role="button"
               onClick={() => {
                 this.setState({paginating: true, page: this.state.page + 1})
-                this.props.chainApi.loadNextBlocks()
+                try {
+                  this.props.chainApi.loadNextBlocks()
+                } catch (err) {
+                  this.context.setError(err)
+                }
               }}
             >
               <img src={arrowDown} alt="" className="dib v-mid" />
@@ -132,5 +136,7 @@ class Chain extends Component {
     );
   }
 }
+
+Chain.contextType = ErrorContext
 
 export default Chain;
