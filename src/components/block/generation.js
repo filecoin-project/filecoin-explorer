@@ -6,7 +6,7 @@ class Generation extends React.Component {
     const { blocks } = this.props;
     if (!blocks) return null;
     return (
-      <div className="nowrap">
+      <div className="nowrap" style={{ margin: "2rem 0px"}}>
         {blocks.map((b, i) => {
           return (
             <div className="dib pr4" style={{ width: 250 }} key={i}>

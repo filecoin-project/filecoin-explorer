@@ -127,7 +127,7 @@ class Chain extends Component {
           }
           {paginating &&
             <div style={{ height: '60px' }}>
-              <Spinner loading style={{ top: '40px', left: '31px', position: 'relative', height: '20px' }} />
+              <Spinner loading style={{ top: '20px', left: '31px', position: 'relative', height: '20px' }} />
             </div>
           }
         </FlipMove>
