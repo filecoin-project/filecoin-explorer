@@ -11,6 +11,9 @@ const ErrorMessage = ({error}) => (
   </div>
 )
 
+// ignores request aborted errors that occur from page refresh
+const isValidError = (error) => error && error.message && !error.message.toLowerCase().includes('request aborted')
+
 class ErrorWrapper extends React.Component {
   constructor(props) {
     super(props)
@@ -24,7 +27,7 @@ class ErrorWrapper extends React.Component {
   render() {
     return (
       <ErrorContext.Provider value={{ error: this.state.error, setError: this.setError.bind(this) }}>
-        {this.state.error
+        {isValidError(this.state.error)
           ? <React.Fragment>
             <Nav />
             <ErrorMessage error={this.state.error.message} />

@@ -5,7 +5,6 @@ import Badge from '../badge/badge';
 import Generation from './generation';
 import MessagesTable from '../table/messages-table.js';
 import MessageReceiptsTable from '../table/message-receipts-table.js';
-import ErrorModal from '../error/error-modal.js';
 import Spinner from '../loading/spinner';
 import arrowUp from './arrow-up.svg';
 import arrowDown from './arrow-down.svg';

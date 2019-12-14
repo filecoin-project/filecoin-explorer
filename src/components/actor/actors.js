@@ -138,33 +138,33 @@ export function Actor({ actor }) {
   );
 }
 
-function Exports({ exports }) {
-  const entries = Object.entries(exports || {});
-  if (entries.length === 0) return null;
-  return (
-    <div>
-      <h3 className="ttu fw4 f6 montserrat charcoal tracked">Exports</h3>
-      {entries.map(ent => (
-        <Export key={ent[0]} name={ent[0]} data={ent[1]} />
-      ))}
-    </div>
-  );
-}
+// function Exports({ exports }) {
+//   const entries = Object.entries(exports || {});
+//   if (entries.length === 0) return null;
+//   return (
+//     <div>
+//       <h3 className="ttu fw4 f6 montserrat charcoal tracked">Exports</h3>
+//       {entries.map(ent => (
+//         <Export key={ent[0]} name={ent[0]} data={ent[1]} />
+//       ))}
+//     </div>
+//   );
+// }
 
-function Export({ name, data }) {
-  return (
-    <code className="db lh-copy f7 pb2">
-      <span className="green">{name} </span>
-      <span className="aqua">(</span>
-      <span className="dark-gray">{data.Params.join(', ')}</span>
-      <span className="aqua">)</span>
-      <span className="red"> => </span>
-      <span className="aqua">(</span>
-      <span className="dark-gray">{data.Return.join(', ')}</span>
-      <span className="aqua">)</span>
-    </code>
-  );
-}
+// function Export({ name, data }) {
+//   return (
+//     <code className="db lh-copy f7 pb2">
+//       <span className="green">{name} </span>
+//       <span className="aqua">(</span>
+//       <span className="dark-gray">{data.Params.join(', ')}</span>
+//       <span className="aqua">)</span>
+//       <span className="red"> => </span>
+//       <span className="aqua">(</span>
+//       <span className="dark-gray">{data.Return.join(', ')}</span>
+//       <span className="aqua">)</span>
+//     </code>
+//   );
+// }
 
 function Memory({ memory, actorType }) {
   if (!memory || Object.keys(memory).length === 0) return null;
