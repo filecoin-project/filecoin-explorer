@@ -74,7 +74,9 @@ table .inner {
 }
 
 #page-container {
-  overflow-x: scroll;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 @media (max-width: 780px) {

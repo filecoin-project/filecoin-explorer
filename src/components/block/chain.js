@@ -102,7 +102,7 @@ class Chain extends Component {
                 .filter(gen => gen.length > 0)
                 .map((gen, i) => <Generation blocks={gen} key={i} />)
             : null}
-          {!paginating && numUpdatesFromChain > 5 && this.state.page < 5 &&
+          {!paginating && numUpdatesFromChain > 3 && this.state.page < 5 &&
             <div
               style={{
                 cursor: 'pointer',
