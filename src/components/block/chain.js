@@ -5,10 +5,19 @@ import Generation from './generation';
 import arrowDown from './arrow-down.svg';
 import { ErrorContext } from '../error'
 
-const convertChainStateToArray = chainState =>
-  Object.keys(chainState)
+// this function returns two arrays
+// 1 array represents the chain and its block
+// 2 array stores heights as references for the first array
+const convertChainStateToArray = chainState => {
+  const heights = []
+  const chain = Object.keys(chainState)
     .sort((a, b) => b - a)
-    .map(height => chainState[height]);
+    .map(height => {
+      heights.push(height)
+      return chainState[height]
+    });
+  return { heights, chain }
+}
 
 class Chain extends Component {
   constructor(props) {
@@ -18,6 +27,7 @@ class Chain extends Component {
       paginating: false,
       page: 1,
       numUpdatesFromChain: 0,
+      saySorry: false,
     };
   }
 
@@ -26,8 +36,10 @@ class Chain extends Component {
   };
 
   storeSubscriptionCallback = chainState => {
+    const { chain, heights } = convertChainStateToArray(chainState)
     this.setState({
-      chain: convertChainStateToArray(chainState),
+      chain,
+      heights,
       // we count the number of chain updates so we dont show any blank screens
       numUpdatesFromChain: this.state.numUpdatesFromChain + 1,
       paginating: false,
@@ -37,14 +49,16 @@ class Chain extends Component {
   componentDidMount() {
     // loading the chain is a non blocking, asyncronous operation
     this.loadChain()
+    this.timer = setTimeout(() => this.setState({ saySorry: true }), 5000)
   }
 
   async loadChain() {
     try {
-      const arrayChain = convertChainStateToArray(this.props.chainApi.getChain());
+      const {chain, heights} = convertChainStateToArray(this.props.chainApi.getChain());
       this.setState({
-        chain: arrayChain,
-        numUpdatesFromChain: arrayChain.length,
+        chain,
+        heights,
+        numUpdatesFromChain: chain.length,
       });
       // subscribe to new chain events
       this.props.chainApi.subscribe(this.storeSubscriptionCallback);
@@ -68,7 +82,7 @@ class Chain extends Component {
   }
 
   render() {
-    const { chain, numUpdatesFromChain, paginating } = this.state;
+    const { chain, heights, numUpdatesFromChain, paginating } = this.state;
 
     // wait until 3 chain updates come in before marking "loading" as complete
     const loading = numUpdatesFromChain < 3;
@@ -90,6 +104,7 @@ class Chain extends Component {
         <>
           <h3>Chain is loading...</h3>
           <p>Blocks will be streamed starting from the Chain Head</p>
+          {this.state.saySorry && <p>Sorry, we know this is taking a while. We're working on making this faster.</p>}
         </>
       );
     }
@@ -99,10 +114,9 @@ class Chain extends Component {
         <FlipMove enterAnimation="fade" leaveAnimation="fade">
           {chain
             ? chain
-                .filter(gen => gen.length > 0)
-                .map((gen, i) => <Generation blocks={gen} key={i} />)
+                .map((gen, i) => <Generation blocks={gen} key={i} height={heights[i]} />)
             : null}
-          {!paginating && numUpdatesFromChain > 5 && this.state.page < 5 &&
+          {!paginating && numUpdatesFromChain > 3 && this.state.page < 5 &&
             <div
               style={{
                 cursor: 'pointer',
