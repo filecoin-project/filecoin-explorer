@@ -68,3 +68,11 @@ table .inner {
 .modal button.close::after {
   content: '⨉'
 }
+
+
+
+.about {
+  max-width: 80%;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.4em;
+}

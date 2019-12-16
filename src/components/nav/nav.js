@@ -13,6 +13,7 @@ function Nav () {
         <NavLink to={`/${hash}`} exact className='dib link snow ph4 pv3 fw3 focus-outline' activeClassName='bg-navy-muted'>Chain</NavLink>
         <NavLink to={`/head${hash}`} className='dib link snow ph4 pv3 focus-outline' activeClassName='bg-navy-muted'>Best Block</NavLink>
         <NavLink to={`/actors${hash}`} className='dib link snow ph4 pv3 focus-outline' activeClassName='bg-navy-muted'>Actors</NavLink>
+        <NavLink to={`/info`} className='dib link snow ph4 pv3 focus-outline' activeClassName='bg-navy-muted'>About</NavLink>
       </nav>
       <div className='dtc tr v-mid montserrat fw2 f4 aqua ph4' style={{width: 250}}>Filecoin Explorer</div>
     </div>
