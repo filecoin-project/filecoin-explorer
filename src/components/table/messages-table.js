@@ -3,30 +3,18 @@ import Cid from '../cid/cid'
 import {MethodName, Params} from '../actor/method'
 import { Table, Td, Th } from './table'
 
-// @param row: { signature: "", meteredMessage: { message: {...}}}
-const MessageRow = ({row}) => {
-  if (!row || !row.signature) return null
-  const { signature, ...rest } = row
-  let message = {}
-  if (rest.meteredMessage) {
-    message = rest.meteredMessage.message
-  } else {
-    // find the first prop that has a message sub-prop
-    const msgKey = Object.keys(rest).find(key => !!rest[key].message)
-    if (msgKey) {
-      message = rest[msgKey].message
-    }
-  }
+// @param message: { To, From, Value, Nonce, Method, Params }
+
+const MessageRow = ({ message }) => {
   // TODO: find out the minimal interface for a message, that we could render below.
   return (
     <tr>
-      <Td><Cid value={message.to} /></Td>
-      <Td><Cid value={message.from} /></Td>
-      <Td align='right'>{message.value}</Td>
-      <Td align='right'>{message.nonce}</Td>
-      <Td><MethodName>{message.method}</MethodName></Td>
-      <Td><Params>{message.params}</Params></Td>
-      <Td aligh='right'>{signature}</Td>
+      <Td><Cid value={message.To} /></Td>
+      <Td><Cid value={message.From} /></Td>
+      <Td align='right'>{message.Value}</Td>
+      <Td align='right'>{message.Nonce}</Td>
+      <Td><MethodName>{message.Method}</MethodName></Td>
+      <Td><Params>{message.Params}</Params></Td>
     </tr>
   )
 }
@@ -43,11 +31,11 @@ const MessagesTable = ({data}) => {
           <Th>Nonce</Th>
           <Th>MeThod</Th>
           <Th>Params</Th>
-          <Th>Signature</Th>
+          {/* <Th>Signature</Th> */}
         </tr>
       </thead>
       <tbody>
-        {data.map((row, i) => <MessageRow key={`message-row-${i}`} row={row} />)}
+        {data.map((message, i) => <MessageRow key={`message-row-${i}`} message={message} />)}
       </tbody>
     </Table>
   )

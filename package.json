@@ -8,6 +8,8 @@
     "node": ">= 8.0.0"
   },
   "dependencies": {
+    "@openworklabs/lotus-block-explorer": "^0.1.2",
+    "axios": "^0.19.0",
     "ipfs-css": "^0.5.0",
     "map-obj": "^3.0.0",
     "query-string": "^5.1.1",

@@ -69,10 +69,42 @@ table .inner {
   content: '⨉'
 }
 
-
-
 .about {
   max-width: 80%;
   font-family: 'Montserrat', sans-serif;
   line-height: 1.4em;
+}
+
+.nowrap:first-child {
+  margin-top: 0px !important;
+}
+
+#page-container {
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@media (max-width: 780px) {
+  #error-message {
+    padding-right: 60px;
+  }
+}
+
+/* Hack. TODO: replace w/ better css. */
+@media (max-width: 696px) {
+  #next-block-arrow {
+    height: 40px !important;
+    margin-left: 0px;
+  }
+
+  .lh-title .ph4 {
+    padding-left: .875rem;
+    padding-right: .875rem;
+    font-size: .875rem;
+  }
+
+  #product-name {
+    display: none;
+  }
 }
