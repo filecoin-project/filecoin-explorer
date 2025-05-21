@@ -4,7 +4,7 @@
 
 > Filecoin block explorer
 
-An open source Filecoin block explorer written in JavaScript.
+An open-source Filecoin block explorer written in JavaScript.
 
 ## Table of Contents
 
